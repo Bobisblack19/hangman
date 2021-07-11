@@ -1,0 +1,84 @@
+# I'm still new to programming so I wanted to create something that was kind of simple. I settled on hangman as
+# a fun entry level idea. It's still got some bugs but its functional. I'm going to be revisiting it as my knowledge
+# base deepens to improve it, add features and clean up the code.
+
+print("Welcome to Hangman! You have a chance to save this poor soul, all you have to do "
+      "is guess the word I'm thinking. I'll give ya six trys!")
+# starting message for the game, introduces the player to the game
+
+# a_total, g_total and noose are the main way the game is scored, all are int except for noose which is
+# converted to float during the game.
+
+# a_total is the length of the word.
+
+a_total = int
+
+# g_total is correct guesses, which ticks up for each correct letter chosen.
+
+g_total = int
+
+# Noose is equal to 0 at the start and with each wrong response the program adds 1 to the count.
+# When the noose count reaches 6, the player loses, though this value might change in the future.
+
+noose = int
+
+# When a_total and g_total match, the player wins.
+# also if the player chooses inputs the word choosen, the player wins.
+
+guesses = []# a list that holds already selected guesses.
+
+
+def hangman():
+    answer = "success"
+    g_total = 0
+    a_total = len(answer)
+    noose = 0
+    # set the totals to their proper values for test word. When I get a random word generator up and running, the
+    # value will change dynamically
+
+    while True:
+        print("\nTake a guess at a letter or the word! You've got", 6 - round(noose, 0), "tries left\n")
+        # this lets the player know how many attempts they have left.
+        guess = input()
+        if guess in guesses:
+            print("Are you okay? You picked that letter already. Can't pick it twice!")
+            continue
+            # this ensures that the player can't keep picking the same letter over and over
+        for x in answer:
+            if guess == x:
+                g_total+=1
+                guesses.append(guess)
+                print("\nThat's right! That letter is in this word! This guy might make it after all!\n")
+                # correct guesses give this message.
+            if guess not in answer:
+                noose+=1/7
+                guesses.append(guess)
+                print("\nThat's not right at all! There's no", guess, "in this word! Do you want this poor guy to die?\n")
+                # this is the response that the player gets when they input a wrong guess.
+        if g_total == a_total:
+            print("\nGotnabit, you're good at this! I guess he gets to live another day")
+            print("\nThis was the word I was thinking of was", answer)
+            break
+            # wincon 1
+        if noose >= 6:
+            print("\nThats too bad! He almost made it. Was kind of rootin' for im myself towards the end. Oh well, another "
+                 "one for the buzzards")
+            print("\nThis was the word I was thinking of was", answer)
+            break
+            # lose condition
+        if guess == answer:
+            print("\nGotnabit, you're good at this! I guess he gets to live another day")
+            print("\nThis was the word I was thinking of was", answer)
+            break
+            # secondary win condition
+
+
+
+hangman()
+
+# things to add
+# - random word generator to make word selection dynamic
+# - find a way to remove repeated messages that occur during calculation. instead output message and score.
+# - make total attempts more flexible and dynamic based on the word used.
+# - potentially institute a user interface for game to make proceedings more engaging
+
